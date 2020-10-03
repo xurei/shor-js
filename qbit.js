@@ -2,30 +2,37 @@
 const Complex = require('Complex');
 
 class qbit {
-    v1 = new Complex(1,0);
-    v2 = new Complex(0,0);
+    zero = new Complex(1,0);
+    one = new Complex(0,0);
     states = [];
-}
-
-qbit.zero = () => {
-    const out = new qbit();
-    out.v1 = new Complex(1,0);
-    out.v2 = new Complex(0,0);
-    return out;
-}
-
-qbit.one = () => {
-    const out = new qbit();
-    out.v1 = new Complex(0,0);
-    out.v2 = new Complex(1,0);
-    return out;
+    
+    product(/*qbit*/ right) {
+    
+    }
+    
+    static zero() {
+        const out = new qbit();
+        out.zero = new Complex(1,0);
+        out.one = new Complex(0,0);
+        return out;
+    }
+    
+    static one() {
+        const out = new qbit();
+        out.zero = new Complex(0,0);
+        out.one = new Complex(1,0);
+        return out;
+    }
+    
+    static compose (/*Complex*/ alpha, /*Complex*/ beta) {
+        const out = new qbit();
+        out.zero = Complex.from(alpha);
+        out.one = Complex.from(beta);
+        return out;
+    }
 }
 
 const QONE = qbit.one();
-const QZERO = qbit.one();
+const QZERO = qbit.zero();
 
-qbit.compose = (/*Complex*/ alpha, /*Complex*/ beta) => {
-    const out = new qbit();
-    out.v1 = alpha;
-    out.v2 = beta;
-}
+module.exports = qbit;

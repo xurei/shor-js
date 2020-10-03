@@ -18,11 +18,14 @@
   "homepage": "https://github.com/xurei/shor-js#readme",
   "dependencies": {
     "Complex": "^3.0.0",
+    "assert": "^2.0.0",
+    "chai": "^4.2.0",
     "fft-js": "0.0.12",
     "fourier": "^0.3.0",
     "fourier-transform": "^1.1.2",
     "gcd": "0.0.1",
     "gnu-plot": "^0.2.4",
-    "gnuplot": "^0.3.1"
+    "gnuplot": "^0.3.1",
+    "mocha": "^8.1.3"
   }
 }
