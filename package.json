@@ -1,0 +1,28 @@
+{
+  "name": "shor",
+  "version": "1.0.0",
+  "description": "A classical implementation of Shor's algorithm in JS, because why not?",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xurei/shor-js.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xurei/shor-js/issues"
+  },
+  "homepage": "https://github.com/xurei/shor-js#readme",
+  "dependencies": {
+    "Complex": "^3.0.0",
+    "fft-js": "0.0.12",
+    "fourier": "^0.3.0",
+    "fourier-transform": "^1.1.2",
+    "gcd": "0.0.1",
+    "gnu-plot": "^0.2.4",
+    "gnuplot": "^0.3.1"
+  }
+}
