@@ -1,38 +1,56 @@
 // A simple qbit representation. Not scientifically accurate, I suppose...
 const Complex = require('Complex');
 
-class qbit {
-    zero = new Complex(1,0);
-    one = new Complex(0,0);
-    states = [];
+class qbits {
+    n;
+    factors;
     
-    product(/*qbit*/ right) {
-    
+    constructor(_n, _factors) {
+        this.n = _n;
+        this.factors = _factors.map(v => Complex.from(v));
     }
     
-    static zero() {
-        const out = new qbit();
-        out.zero = new Complex(1,0);
-        out.one = new Complex(0,0);
-        return out;
-    }
-    
-    static one() {
-        const out = new qbit();
-        out.zero = new Complex(0,0);
-        out.one = new Complex(1,0);
-        return out;
-    }
-    
-    static compose (/*Complex*/ alpha, /*Complex*/ beta) {
-        const out = new qbit();
-        out.zero = Complex.from(alpha);
-        out.one = Complex.from(beta);
-        return out;
+    entangle(/*qbits*/ right) {
+        const n2 = this.n + right.n;
+        const size = Math.pow(2, n2);
+        const factors2 = new Array(size);
+        let i = 0;
+        this.factors.forEach((l) => {
+            right.factors.forEach((r) => {
+                factors2[i] = l.clone().multiply(r);
+                i++;
+            });
+        });
+        return new qbits(n2, factors2)
     }
 }
 
-const QONE = qbit.one();
-const QZERO = qbit.zero();
+class qbit extends qbits {
+    get zero() {
+        return this.factors[0];
+    };
+    get one() {
+        return this.factors[1];
+    }
+    
+    constructor(/*Complex*/ alpha, /*Complex*/ beta) {
+        super(1, [ Complex.from(alpha), Complex.from(beta) ]);
+    }
+    
+    static both() {
+        return new qbit(new Complex(1 / Math.sqrt(2), 0), new Complex(1 / Math.sqrt(2), 0));
+    }
+    
+    static zero() {
+        return new qbit(new Complex(1, 0), new Complex(0, 0));
+    }
+    
+    static one() {
+        return new qbit(new Complex(0, 0), new Complex(1, 0));
+    }
+}
 
-module.exports = qbit;
+module.exports = {
+    qbit,
+    qbits,
+};

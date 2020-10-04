@@ -19,7 +19,6 @@
   "dependencies": {
     "Complex": "^3.0.0",
     "assert": "^2.0.0",
-    "chai": "^4.2.0",
     "fft-js": "0.0.12",
     "fourier": "^0.3.0",
     "fourier-transform": "^1.1.2",

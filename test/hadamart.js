@@ -1,9 +1,7 @@
 const mocha = require('mocha');
-const chai = require('chai');
 var assert = require('assert');
-const expect = chai.expect;
 const hadamart1 = require('../hadamart').hadamart1;
-const qbit = require('../qbit');
+const qbit = require('../qbit').qbit;
 const Complex = require('Complex');
 
 describe('Quantum gates', () => {
