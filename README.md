@@ -1,4 +1,7 @@
-" What I can't code I don't understand"
+🏗🏗🏗 DISCLAIMER: this is still a work-in-progress 🏗🏗🏗
+
+
+"What I can't code I don't understand"
 
 # shor-js
 This is a classical implementation of [Shor's quantum algorithm](https://en.wikipedia.org/wiki/Shor%27s_algorithm).
