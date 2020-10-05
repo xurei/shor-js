@@ -5,6 +5,15 @@ class qbits {
     n;
     factors;
     
+    static all(_n) {
+        let out = qbit.both();
+        while (_n > 1) {
+            --_n;
+            out = out.entangle(qbit.both());
+        }
+        return out;
+    }
+    
     constructor(_n, _factors) {
         this.n = _n;
         this.factors = _factors.map(v => Complex.from(v));
@@ -21,7 +30,33 @@ class qbits {
                 i++;
             });
         });
-        return new qbits(n2, factors2)
+        return new qbits(n2, factors2);
+    }
+    
+    applyClassicalFunction(n, fn) {
+        // This function is a cheaty way to bypass some of the most complex parts of quantum computing. It also helps
+        // making draft code easier, before making an actual quantum circuit.
+    
+        const n2 = this.n + n;
+        const size = Math.pow(2, n2);
+        const factors2 = new Array(size);
+        for (let i=0; i<size; ++i) {
+            factors2[i] = Complex.from(0);
+        }
+        
+        this.factors.forEach((f, i) => {
+            if (f.magnitude() > 0) {
+                const j = fn(i);
+                const i2 = i << n + j;
+                factors2[i2] = f;
+            }
+        });
+        return new qbits(n2, factors2);
+    }
+    
+    toPrecision(n) {
+        const factors = this.factors.map(f => f.toPrecision(n));
+        return new qbits(this.n, factors);
     }
 }
 

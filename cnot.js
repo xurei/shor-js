@@ -27,8 +27,6 @@ function cnot(/*qbit*/ control, /*qbit*/ target) {
     const gamma = f[0]*CNOT[2][0] + f[1]*CNOT[2][1] + f[2]*CNOT[2][2] + f[3]*CNOT[2][3];
     const delta = f[0]*CNOT[3][0] + f[1]*CNOT[3][1] + f[2]*CNOT[3][2] + f[3]*CNOT[3][3];
     
-    console.log(alpha, beta, gamma, delta);
-    
     return new qbits(2,
         [
             alpha,

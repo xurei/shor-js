@@ -5,8 +5,17 @@ const qbits = require('../qbit').qbits;
 
 const ONE_SQRT2 = 1.0/Math.sqrt(2);
 const ONE_SQRT4 = 1.0/Math.sqrt(4);
+const ONE_SQRT8 = 1.0/Math.sqrt(8);
 
 describe('Qbits', () => {
+    describe('all', () => {
+        it('qbits.all(3) = entangle(❙0❭, entangle(❙0❭, ❙0❭))', () => {
+            assert.deepEqual(
+                qbits.all(3).toPrecision(8),
+                new qbits(3, [ONE_SQRT8,ONE_SQRT8,ONE_SQRT8,ONE_SQRT8,ONE_SQRT8,ONE_SQRT8,ONE_SQRT8,ONE_SQRT8]).toPrecision(8)
+            );
+        });
+    });
     describe('entangle', () => {
         it('entangle(❙0❭, ❙0❭) = ❙00❭', () => {
             assert.deepEqual(qbit.zero().entangle(qbit.zero()), new qbits(2, [1, 0, 0, 0]));

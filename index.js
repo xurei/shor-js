@@ -4,6 +4,9 @@ const ft = require('fourier-transform');
 //const fftUtil = require('fft-js').util;
 var gnuplot = require('gnu-plot');
 const myidft = require('./myidft');
+const qbit = require('./qbit').qbit;
+const qbits = require('./qbit').qbits;
+const qft = require('./qft');
 
 var fourier = require('fourier');
 const fft = (data) => {
@@ -73,6 +76,50 @@ function doFactor(N) {
 }
 
 function quantum_part(N, a) {
+    const NN = N*N;
+    //Given N, find Q=2q such that N^2 ≤ Q < 2N^2, which implies that Q/r > N
+    let Q = 2;
+    let q = 1;
+    let n = Math.ceil(Math.log2(N));
+    while (Q < NN) {
+        Q *= 2;
+        q++;
+    }
+    console.log("N:", N, "<= 2 ^", n);
+    console.log("Q:", Q, "= 2 ^", q);
+    
+    // Initialize a fully entangled set of q bits. This represents the initial states with all the exponents given to f(x) = a^x mod N
+    // Notice: The emulation on a classical computer takes a O(2^q) time and space algorithm. It will *NOT* be efficient. At all !
+    //         On an actual quantum computer, it takes a O(q) time and space computation - provided you can make a clever measurement.
+    const input = qbits.all(q);
+    
+    //Quantum function : some pointers
+    //https://towardsdatascience.com/qantum-parallelism-where-quantum-computers-get-their-mojo-from-66c93bd09855
+    //https://arxiv.org/pdf/1202.6614.pdf
+    
+    //Quantum modular exponentiation is still a researched field. For now, let's just do it more classically, even if it's probably not valid
+    const output = input.applyClassicalFunction(n, function modexp(x) {
+        let out = 1;
+        for (let i=0; i<x; ++i) {
+            out = (out * a) % N;
+        }
+        return out;
+    });
+    /*input.factors.forEach((f, i) => {
+        if (f.magnitude() > 0) {
+            const j = fn(i);
+            const i2 = i << n + j;
+        }
+    })*/
+    
+    qft(output, input.n);
+    
+    console.log(output);
+    
+    return 14;
+}
+
+function quantum_part_fullclassical(N, a) {
     //Draft version, just to make sure I understood it well
     let acc = a;
     let vals = [];
@@ -218,7 +265,7 @@ function quantum_part(N, a) {
     return 16;
 }
 
-doFactor(21);
+doFactor(15);
 
 //console.log(fftUtil.fftMag(fft([0,1,0,2,0,1,0,2,0,1,0,2,0,1,0,2])));
 //console.log(fftUtil.fftMag(fft([0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1])));
